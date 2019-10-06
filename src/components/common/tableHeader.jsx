@@ -5,7 +5,7 @@ import {
 	faSortAlphaUp
 } from "@fortawesome/free-solid-svg-icons";
 
-class MoviesHeader extends Component {
+class TableHeader extends Component {
 	raiseSort = (path) => {
 		const sortColumn = { ...this.props.sortColumn };
 		if (sortColumn.path === path) {
@@ -43,4 +43,4 @@ class MoviesHeader extends Component {
 	}
 }
 
-export default MoviesHeader;
+export default TableHeader;
