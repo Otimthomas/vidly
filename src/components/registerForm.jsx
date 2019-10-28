@@ -1,6 +1,7 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
+import { saveMovie } from "../services/fakeMovieService";
 
 class RegisterForm extends Form {
 	state = {
@@ -26,9 +27,9 @@ class RegisterForm extends Form {
 			.label("Name")
 	};
 
-	doSubmit = () => {
+	doSubmit = async () => {
+		await saveMovie(this.state.data);
 		//do server work
-		console.log("Submitted");
 	};
 
 	render() {
