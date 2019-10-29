@@ -126,12 +126,15 @@ class Movies extends Component {
 						/>
 					</div>
 					<div className='col'>
-						<Link className='btn btn-primary' to='/movies/new'>
-							Add Movie
-						</Link>
+						{this.props.user && (
+							<Link className='btn btn-primary' to='/movies/new'>
+								Add Movie
+							</Link>
+						)}
 						<p>There are {totalCount} in the database...</p>
 						<SearchBox value={searchQuery} onChange={this.handleSearch} />
 						<MoviesTable
+							user={this.props.user}
 							movies={movies}
 							onLike={this.handleInconChange}
 							onDelete={this.handleDelete}
