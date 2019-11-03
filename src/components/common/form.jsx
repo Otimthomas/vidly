@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Joi from "joi-browser";
 import Input from "./input";
 import Select from "./select";
+import Textarea from "./textArea";
 
 class Form extends Component {
 	state = {
@@ -67,6 +68,19 @@ class Form extends Component {
 			<Select
 				name={name}
 				options={options}
+				value={data[name]}
+				label={label}
+				onChange={this.handleChange}
+				error={errors[name]}
+			/>
+		);
+	}
+
+	renderTextareat(name, label) {
+		const { data, errors } = this.state;
+		return (
+			<Textarea
+				name={name}
 				value={data[name]}
 				label={label}
 				onChange={this.handleChange}
