@@ -9,8 +9,7 @@ class RegisterForm extends Form {
 		data: {
 			username: "",
 			password: "",
-			name: "",
-			comment: ""
+			name: ""
 		},
 		errors: {}
 	};

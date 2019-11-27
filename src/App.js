@@ -19,6 +19,7 @@ class App extends Component {
 
 	componentDidMount() {
 		const user = auth.getCurrentUser();
+		//console.log(user.isAdmin);
 		this.setState({ user });
 	}
 

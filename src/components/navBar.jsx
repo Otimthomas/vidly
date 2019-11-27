@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 const NavBar = ({ user }) => {
+	if (user) {
+		console.log(user);
+	}
 	return (
 		<nav className='navbar navbar-expand-lg navbar-light bg-light'>
 			<Link className='navbar-brand' to='/movies'>
@@ -20,11 +23,13 @@ const NavBar = ({ user }) => {
 							Rentals
 						</NavLink>
 					</li>
-					<li className='nav-item'>
-						<NavLink className='nav-link' to='/customers'>
-							Customers
-						</NavLink>
-					</li>
+					{user && user.isAdmin && (
+						<li className='nav-item'>
+							<NavLink className='nav-link' to='/customers'>
+								Customers
+							</NavLink>
+						</li>
+					)}
 
 					{!user && (
 						<React.Fragment>
