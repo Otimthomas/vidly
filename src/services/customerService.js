@@ -25,6 +25,6 @@ export function saveCustomer(customer) {
     return http.post(apiEndpoint, customer)
 }
 
-export function deleteMovie(customerId) {
+export function deleteCustomer(customerId) {
     return http.delete(apiEndpoint + '/' + customerId)
 }

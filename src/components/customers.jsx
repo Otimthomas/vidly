@@ -24,23 +24,34 @@ class Customers extends Form {
 
 	async componentDidMount() {
 		const { data: customers } = await customerService.getCustomers();
-		// console.log(customers);
 		this.setState({ customers });
 	}
 
 	doSubmit = async (event) => {
-		// console.log("Submitted");
 		const { data: customer } = await customerService.saveCustomer(
 			this.state.data
 		);
 		this.setState({ customers: [...this.state.customers, customer] });
-		// this.props.history.push("/customers");
 		this.setState({
 			data: {
 				name: "",
 				phone: ""
 			}
 		});
+	};
+
+	handleDelete = async (customer) => {
+		const originalCustomers = [...this.state.customers];
+		const updated = originalCustomers.filter((c) => c._id !== customer._id);
+		this.setState({ customers: updated });
+
+		try {
+			await customerService.deleteCustomer(customer._id);
+		} catch (ex) {
+			if (ex.response && ex.response.status === 404)
+
+			this.setState({ movies: originalCustomers });
+		}
 	};
 
 	render() {
@@ -58,11 +69,17 @@ class Customers extends Form {
 					<div className='col'>
 						{this.state.customers.map((customer, index) => (
 							<div key={customer._id}>
+								<hr />
 								<h4>
 									{index + 1}. Name: {customer.name}
 								</h4>
 								<p>Phone: {customer.phone}</p>
 								<p>IsGold: {customer.isGold.toString()}</p>
+								<button
+									className='btn btn-danger'
+									onClick={() => this.handleDelete(customer)}>
+									Delete
+								</button>
 							</div>
 						))}
 					</div>
