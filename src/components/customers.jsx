@@ -14,6 +14,8 @@ class Customers extends Form {
 	};
 
 	schema = {
+		_id: Joi.string(),
+
 		name: Joi.string()
 			.required()
 			.label("Name"),
@@ -27,11 +29,16 @@ class Customers extends Form {
 		this.setState({ customers });
 	}
 
+	componentWillUpdate = async () => {
+		const { data: customers } = await customerService.getCustomers();
+		this.setState({ customers });
+	}
+
 	doSubmit = async (event) => {
 		const { data: customer } = await customerService.saveCustomer(
 			this.state.data
 		);
-		this.setState({ customers: [...this.state.customers, customer] });
+		
 		this.setState({
 			data: {
 				name: "",
@@ -49,10 +56,24 @@ class Customers extends Form {
 			await customerService.deleteCustomer(customer._id);
 		} catch (ex) {
 			if (ex.response && ex.response.status === 404)
-
-			this.setState({ movies: originalCustomers });
+				this.setState({ movies: originalCustomers });
 		}
 	};
+
+	handleEdit = async (customer) => {
+		const { data } = await customerService.getCustomer(customer._id);
+		//console.log(data);
+		this.setState({ data: this.populateCustomerDB(data) });
+		//console.log(this.state.data);
+	};
+
+	populateCustomerDB(customer) {
+		return {
+			_id: customer._id,
+			name: customer.name,
+			phone: customer.phone
+		};
+	}
 
 	render() {
 		return (
@@ -74,7 +95,12 @@ class Customers extends Form {
 									{index + 1}. Name: {customer.name}
 								</h4>
 								<p>Phone: {customer.phone}</p>
-								<p>IsGold: {customer.isGold.toString()}</p>
+								{/* <p>IsGold: {customer.isGold.toString()}</p> */}
+								<button
+									className='btn btn-primary m-2'
+									onClick={() => this.handleEdit(customer)}>
+									Edit
+								</button>
 								<button
 									className='btn btn-danger'
 									onClick={() => this.handleDelete(customer)}>

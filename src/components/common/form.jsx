@@ -17,6 +17,7 @@ class Form extends Component {
 		if (!error) return null;
 		let errors = {};
 		for (let item of error.details) errors[item.path[0]] = item.message;
+		console.log(errors);
 		return errors;
 	}
 
@@ -24,7 +25,7 @@ class Form extends Component {
 		e.preventDefault();
 
 		const errors = this.validate();
-		console.log(errors);
+		//console.log(errors);
 		this.setState({ errors: errors || {} });
 		if (errors) return;
 		this.doSubmit();
@@ -40,7 +41,7 @@ class Form extends Component {
 	handleChange = ({ currentTarget: input }) => {
 		const errors = { ...this.state.errors };
 		const errorMessage = this.validateProperty(input);
-		console.log(errorMessage);
+		//console.log(errorMessage);
 		if (errorMessage) errors[input.name] = errorMessage;
 		else delete errors[input.name];
 		const data = { ...this.state.data };

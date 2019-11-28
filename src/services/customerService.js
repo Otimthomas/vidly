@@ -15,13 +15,14 @@ export function getCustomer(customerId) {
 
 export function saveCustomer(customer) {
     if (customer._id) {
+        console.log("An id exists")
         const body = {
             ...customer
         };
         delete body._id;
         return http.put(apiEndpoint + '/' + customer._id, body);
     }
-
+    console.log('No id exits')
     return http.post(apiEndpoint, customer)
 }
 
